@@ -1,5 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
-
+import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
 import {
   appoinmentCreateReducer,
   getAppoinmentListReducer,
@@ -18,11 +19,12 @@ const initialState = {
   appoinmentList,
 };
 
+const middleware = [thunk];
 
 const store = createStore(
-    reducer,
-    initialState,
+  reducer,
+  initialState,
+  composeWithDevTools(applyMiddleware(...middleware))
 );
 
-
-export default store
+export default store;

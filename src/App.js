@@ -11,8 +11,9 @@ import {
 import { styled } from "@mui/system";
 import CreateAppoinment from "./components/CreateAppoinment";
 import Card from "./components/Card";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppsOutageOutlined } from "@mui/icons-material";
+import CalenderCard from "./components/Card";
 
 const Wrapper = styled("div")({
   display: "flex",
@@ -27,10 +28,22 @@ const SideBar = styled("div")({
   width: "20%",
   h3: {
     fontSize: "20px",
+    letterSpacing:"1px"
+  },
+  ul: {
+    marginLeft:"-30px",
+    li: {
+      listStyleType: "none",
+      fontSize: "18px",
+      margin:"8px 0px",
+      fontWeight:600,
+      textDecoration:"underline",
+      cursor:'pointer'
+    },
   },
   ".image__Wrapper": {
-    width: "60px",
-    height: "60px",
+    width: "100px",
+    height: "100px",
     textAlign: "center",
   },
   img: {
@@ -41,32 +54,25 @@ const SideBar = styled("div")({
 });
 
 const MainContent = styled("div")({
-  backgroundColor: "#F1F4F8",
   width: "80%",
   padding: "10px 30px",
   h3: {
     textAlign: "center",
     fontSize: "25px",
+    marginBottom: "30px",
   },
 });
 
 const MainContentHeader = styled("div")({
   display: "flex",
   justifyContent: "space-between",
-});
-
-const MainContentBody = styled("div")({
-  display: "flex",
-  justifyContent: "space-between",
-  flexWrap:'wrap',
-  backgroundColor:"#fff",
-  marginTop:'20px'
+  marginBottom: "30px",
 });
 
 const App = () => {
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
-  const [open, setOpen] =useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -76,133 +82,15 @@ const App = () => {
   const [selectedYear, setSelectedYear] = useState(year);
   const [selectedMonth, setSelectedMonth] = useState(month);
 
-  const data = [
-    {
-      age: "20",
-      day: "09",
-      gendar: "Male",
-      month: "02",
-      name: "soykot",
-      year: "2022",
-    },
-    {
-      age: "20",
-      day: "09",
-      gendar: "Male",
-      month: "02",
-      name: "fsds",
-      year: "2022",
-    },
-    {
-      age: "20",
-      day: "09",
-      gendar: "Male",
-      month: "02",
-      name: "soykot",
-      year: "2022",
-    },
-    {
-      age: "20",
-      day: "09",
-      gendar: "Male",
-      month: "02",
-      name: "soykot",
-      year: "2022",
-    },
-    {
-      age: "20",
-      day: "09",
-      gendar: "Male",
-      month: "02",
-      name: "soykot",
-      year: "2022",
-    },
-    {
-      age: "20",
-      day: "09",
-      gendar: "Male",
-      month: "02",
-      name: "soykot",
-      year: "2022",
-    },
-
-    {
-      age: "20",
-      day: "09",
-      gendar: "Male",
-      month: "02",
-      name: "soykot",
-      year: "2022",
-    },
-    {
-      age: "20",
-      day: "09",
-      gendar: "Male",
-      month: "02",
-      name: "soykot",
-      year: "2022",
-    },
-    {
-      age: "20",
-      day: "09",
-      gendar: "Male",
-      month: "02",
-      name: "soykot",
-      year: "2022",
-    },
-
-    {
-      age: "20",
-      day: "09",
-      gendar: "Male",
-      month: "02",
-      name: "soykot",
-      year: "2022",
-    },
-    {
-      age: "20",
-      day: "09",
-      gendar: "Male",
-      month: "02",
-      name: "soykot",
-      year: "2022",
-    },
-    {
-      age: "20",
-      day: "09",
-      gendar: "Male",
-      month: "02",
-      name: "soykot",
-      year: "2022",
-    },
-    {
-      age: "20",
-      day: "09",
-      gendar: "Male",
-      month: "02",
-      name: "soykot",
-      year: "2022",
-    },
-
-    {
-      age: "20",
-      day: "09",
-      gendar: "Male",
-      month: "02",
-      name: "soykot",
-      year: "2021",
-    },
-  ];
-
-  const appoinmentList=useSelector((state)=>state.appoinmentList)
-  console.log(appoinmentList)
+  const appoinmentList = useSelector((state) => state.appoinmentList);
+  // console.log(appoinmentList)
 
   const rowDto = [];
 
   const sortingByYear = (year) => {
-    Object.keys(data).map((idx) => {
-      if (data[idx].year == year) {
-        rowDto.push(data[idx]);
+    Object.keys(appoinmentList).map((idx) => {
+      if (appoinmentList[idx].year == year) {
+        rowDto.push(appoinmentList[idx]);
       }
     });
   };
@@ -212,7 +100,7 @@ const App = () => {
   const sortingByMonth = (month) => {
     Object.keys(rowDto).map((idx) => {
       if (rowDto[idx].month == month) {
-        monthData.push(data[idx]);
+        monthData.push(rowDto[idx]);
       }
     });
   };
@@ -222,10 +110,15 @@ const App = () => {
     <>
       <Wrapper>
         <SideBar>
-          <h3>HEALTHEX</h3>
+          <h3>HEALTH PORTAL</h3>
           <div className="image__Wrapper">
             <img src="https://www.pngitem.com/pimgs/m/455-4554869_doctor-with-stethoscope-png-png-download-doctor-images.png" />
           </div>
+          <ul>
+            <li>Deshboard</li>
+            <li>All Doctor List</li>
+            <li>Appointments</li>
+          </ul>
         </SideBar>
         <MainContent>
           <h3>Doctor Appoinment List</h3>
@@ -268,13 +161,21 @@ const App = () => {
             </Button>
           </MainContentHeader>
 
-          <MainContentBody>
+          <Grid container spacing={1}>
             {Array(30)
               .fill()
               .map((_, index) => (
-                <Card keyi={index} index={index} monthData={monthData}/>
+                <Grid item xs={6} md={4} lg={3}>
+                  <CalenderCard
+                    selectedYear={selectedYear}
+                    selectedMonth={selectedMonth}
+                    key={index}
+                    index={index}
+                    monthData={monthData}
+                  />
+                </Grid>
               ))}
-          </MainContentBody>
+          </Grid>
         </MainContent>
       </Wrapper>
       <CreateAppoinment

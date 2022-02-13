@@ -7,7 +7,6 @@ import {
   Grid,
   Modal,
   Radio,
-  RadioGroup,
   TextField,
 } from "@mui/material";
 import { styled } from "@mui/system";
@@ -59,6 +58,12 @@ const InputGroup = styled("div")({
   },
 });
 
+const RadioGroup = styled("div")({
+  marginBottom: "10px",
+  alignItems: "flex-start",
+  display: "flex",
+});
+
 const ModalFooter = styled("div")({
   display: "flex",
   justifyContent: "flex-end",
@@ -76,12 +81,11 @@ function CreateAppoinment({ open, handleOpen, handleClose }) {
     handleSubmit,
   } = useForm();
 
+  const appoinmentList = useSelector((state) => state.appoinmentList);
 
   const onSubmit = (data) => {
     let patientList = [];
-    patientList = JSON.parse(localStorage.getItem("patientList"))
-      ? JSON.parse(localStorage.getItem("patientList"))
-      : [];
+    patientList = appoinmentList ? appoinmentList : [];
     if (
       patientList.some((v) => {
         return v.name === data?.name;
@@ -92,10 +96,11 @@ function CreateAppoinment({ open, handleOpen, handleClose }) {
       patientList.push({
         name: data?.name,
         age: data?.age,
-        gendar: data?.gendar,
+        gender: data?.gender,
         year: data?.date.split("-")[0],
         month: data?.date.split("-")[1],
         day: data?.date.split("-")[2],
+        time: data?.time,
       });
       dispatch(createAppoinment(patientList));
     }
@@ -134,31 +139,31 @@ function CreateAppoinment({ open, handleOpen, handleClose }) {
                 {...register("age")}
               />
             </InputGroup>
-            <InputGroup>
-              <label>Gender</label>
-              <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="female"
-                name="radio-buttons-group"
-                sx={{ display: "flex", flexDirection: "row" }}
-              >
-                <FormControlLabel
-                  value="female"
-                  control={<Radio />}
-                  label="Female"
-                />
-                <FormControlLabel
-                  value="male"
-                  control={<Radio />}
-                  label="Male"
-                />
-                <FormControlLabel
-                  value="other"
-                  control={<Radio />}
-                  label="Other"
-                />
-              </RadioGroup>
-            </InputGroup>
+            <RadioGroup>
+              <label>Gender:</label>
+              <div style={{display:'flex',marginLeft:"10px"}}>
+                <div >
+                  <input
+                    {...register("gender")}
+                    type="radio"
+                    name="gender"
+                    value="rain"
+                    id="male"
+                  />
+                  <label>Male</label>
+                </div>
+                <div style={{marginLeft:"10px"}}>
+                  <input
+                    {...register("gender")}
+                    type="radio"
+                    name="gender"
+                    value="female"
+                    id="female"
+                  />
+                  <label>Female</label>
+                </div>
+              </div>
+            </RadioGroup>
 
             <InputGroup>
               <label>Date</label>
@@ -199,6 +204,7 @@ function CreateAppoinment({ open, handleOpen, handleClose }) {
                 borderRadius: "4px",
                 letterSpacing: "2px",
                 textTransform: "uppercase",
+                cursor: "pointer",
               }}
             />
           </ModalFooter>
