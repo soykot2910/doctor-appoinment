@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
   Box,
@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
+import { useDispatch, useSelector } from "react-redux";
+import { createAppoinment } from "../actions/appoinmentActions";
 
 const style = {
   position: "absolute",
@@ -66,11 +68,14 @@ const ModalFooter = styled("div")({
 });
 
 function CreateAppoinment({ open, handleOpen, handleClose }) {
+  const dispatch = useDispatch();
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
+
 
   const onSubmit = (data) => {
     let patientList = [];
@@ -92,7 +97,7 @@ function CreateAppoinment({ open, handleOpen, handleClose }) {
         month: data?.date.split("-")[1],
         day: data?.date.split("-")[2],
       });
-      localStorage.setItem("patientList", JSON.stringify(patientList));
+      dispatch(createAppoinment(patientList));
     }
   };
 

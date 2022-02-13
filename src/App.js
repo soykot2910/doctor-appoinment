@@ -11,6 +11,8 @@ import {
 import { styled } from "@mui/system";
 import CreateAppoinment from "./components/CreateAppoinment";
 import Card from "./components/Card";
+import { useDispatch,useSelector } from "react-redux";
+import { AppsOutageOutlined } from "@mui/icons-material";
 
 const Wrapper = styled("div")({
   display: "flex",
@@ -62,6 +64,8 @@ const MainContentBody = styled("div")({
 });
 
 const App = () => {
+  const dispatch=useDispatch();
+
   const [open, setOpen] =useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -189,6 +193,9 @@ const App = () => {
       year: "2021",
     },
   ];
+
+  const appoinmentList=useSelector((state)=>state.appoinmentList)
+  console.log(appoinmentList)
 
   const rowDto = [];
 
